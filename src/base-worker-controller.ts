@@ -26,3 +26,5 @@ export class BaseWorkerController {
   }
 
 }
+
+export default BaseWorkerController;

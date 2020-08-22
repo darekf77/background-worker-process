@@ -7,12 +7,11 @@ import { BaseWorkerChildController } from './base-worker-child-controller';
 export async function mainProcess() {
   const entities = [
     CLASS.getBy('Project')
-  ];
-
+  ].filter(f => !!f);
 
   const w1 = await WorkersFactor.create<BaseWorkerController>(BaseWorkerController, entities);
   const w2 = await WorkersFactor.create<BaseWorkerController>(BaseWorkerChildController, entities);
 
-  const projects = (await w1.instance.allprojects().received);
+  // const projects = (await w1.instance.allprojects().received);
 
 }
