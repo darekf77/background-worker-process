@@ -2,10 +2,18 @@ import { Morphi } from 'morphi';
 //#region @backend
 import { TnpDB } from 'tnp-db';
 import { Project } from 'tnp-helpers';
+import { BootstrapWorker } from './bootsrap-worker.backend';
 //#endregion
+import { WorkerProcessClass } from './worker-process-class';
+
 
 @Morphi.Controller()
-export class BaseWorkerController {
+export class BaseWorkerController extends WorkerProcessClass {
+  //#region @backend
+  get filename() {
+    return __filename;
+  }
+  //#endregion
 
   @Morphi.Http.GET()
   hello(): Morphi.Response {
@@ -27,4 +35,6 @@ export class BaseWorkerController {
 
 }
 
-export default BaseWorkerController;
+//#region @backend
+export default BootstrapWorker.bootstrap(BaseWorkerController);
+//#endregion

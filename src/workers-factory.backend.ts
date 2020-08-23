@@ -1,16 +1,17 @@
+import * as path from 'path';
 import { Morphi } from 'morphi';
 import { TnpDB } from 'tnp-db';
 import { CLASS } from 'typescript-class-helpers';
-import { Helpers } from 'tnp-helpers';
+import { Helpers, Project } from 'tnp-helpers';
 import * as _ from 'lodash';
+import { WorkerProcessClass } from './worker-process-class';
+import { BootstrapWorker } from './bootsrap-worker.backend';
+
 
 export class WorkersFactor {
 
-  private static async runAppFromFile() {
+  public static async create<T extends WorkerProcessClass = any>(classFN: Function, entities: Function[], autokill = false) {
 
-  }
-
-  public static async create<T = any>(classFN: Function, entities: Function[], autokill = false) {
     const db = await TnpDB.Instance();
     const name = CLASS.getName(classFN);
     if (!name || name === '') {
@@ -27,11 +28,19 @@ export class WorkersFactor {
       controllers: [classFN],
       entities
     }) as any;
+
+    const singleton = _.first(controllers) as WorkerProcessClass;
+    const nearestProj = Project.nearestTo(singleton.filename);
+    const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
+    const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
+    const proc = Helpers.run(`ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile}`, { cwd: cwdForWorker }).async();
+    await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
+
     return {
       host,
       port: servicePort,
-      exporessApp: app,
-      instance: _.first(controllers) as T
+      instance: (singleton as any) as T,
+      proc
     }
   }
 
