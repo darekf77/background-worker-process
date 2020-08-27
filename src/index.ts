@@ -1,5 +1,5 @@
+export * from './worker-process-class';
 //#region @backend
 export * from './workers-factory.backend';
-export * from './base-worker-controller.backend';
-export * from './base-worker-child-controller.backend';
+export * from './bootsrap-worker.backend';
 //#endregion

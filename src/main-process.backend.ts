@@ -13,13 +13,13 @@ export async function mainProcess() {
   ].filter(f => !!f);
   const autokill = true;
   const db = await TnpDB.Instance();
-  const portsManaber = await db.portsManaber;
+  const portsManager = await db.portsManaber;
 
-  const w1port = await portsManaber.registerOnFreePort({
+  const w1port = await portsManager.registerOnFreePort({
     name: CLASS.getName(BaseWorkerController)
   }, autokill);
 
-  const w2port = await portsManaber.registerOnFreePort({
+  const w2port = await portsManager.registerOnFreePort({
     name: CLASS.getName(BaseWorkerChildController)
   }, autokill);
 
