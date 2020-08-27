@@ -5,8 +5,9 @@ import { BaseWorkerChildController } from './base-worker-child-controller.backen
 import { Project } from './project';
 import { TnpDB } from 'tnp-db';
 import { CLASS } from 'typescript-class-helpers';
-
+//#endregion
 export async function mainProcess() {
+  //#region @notForNpm
   const entities = [
     Project
   ].filter(f => !!f);
@@ -51,6 +52,6 @@ export async function mainProcess() {
   // console.log((await w1.instance.hello().received).body.text);
   // console.log((await w2.instance.hello().received).body.text);
   // const projects = (await w1.instance.allprojects().received);
-
+  //#endregion
 }
-//#endregion
+
