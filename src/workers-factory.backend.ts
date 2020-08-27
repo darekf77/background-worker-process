@@ -1,12 +1,9 @@
-import * as path from 'path';
 import { Morphi } from 'morphi';
 import { CLASS } from 'typescript-class-helpers';
 import { Helpers, Project } from 'tnp-helpers';
 import * as _ from 'lodash';
-import * as vm from 'vm';
 import { WorkerProcessClass } from './worker-process-class';
 import { BootstrapWorker } from './bootsrap-worker.backend';
-
 
 export class WorkersFactor {
 
@@ -47,33 +44,3 @@ export class WorkersFactor {
   }
 
 }
-
-
-
-
-//#region context text
-// Helpers.run(``)
-
-
-    // const sandbox = {
-    //   require,
-    //   classFN,
-    //   host,
-    //   entities
-    // }
-    // const script = new vm.Script(`
-    // const Morphi = require('morphi').Morphi;
-    // const result = Morphi.init({
-    //   host,
-    //   mode: 'remote-backend',
-    //   controllers: [classFN],
-    //   entities
-    // });
-    // this.result = result;
-    // `);
-
-    // const context = vm.createContext(sandbox) as any;
-    // // context.
-    // script.runInContext(context);
-
-//#endregion

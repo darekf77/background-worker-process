@@ -1,7 +1,7 @@
 import { Morphi } from 'morphi';
 //#region @notForNpm
 import { TnpDB } from 'tnp-db';
-//#region
+//#endregion
 import { Project } from './project';
 import { BootstrapWorker } from './bootsrap-worker.backend';
 import { WorkerProcessClass } from './worker-process-class';
