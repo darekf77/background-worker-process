@@ -1,17 +1,12 @@
 import { Morphi } from 'morphi';
-import { BaseWorkerController } from './base-worker-controller';
-//#region @backend
+import { BaseWorkerController } from './base-worker-controller.backend';
 import { BootstrapWorker } from './bootsrap-worker.backend';
-//#endregion
 
 @Morphi.Controller()
 export class BaseWorkerChildController extends BaseWorkerController {
-
-  //#region @backend
   get filename() {
     return __filename;
   }
-  //#endregion
 
   @Morphi.Http.GET('/')
   html(): Morphi.Response {
@@ -33,6 +28,5 @@ export class BaseWorkerChildController extends BaseWorkerController {
 
 }
 
-//#region @backend
 export default BootstrapWorker.bootstrap(BaseWorkerChildController);
-//#endregion
+

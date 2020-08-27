@@ -1,23 +1,19 @@
 import { Morphi } from 'morphi';
-//#region @backend
+//#region @notForNpm
 import { TnpDB } from 'tnp-db';
+//#region
 import { Project } from './project';
 import { BootstrapWorker } from './bootsrap-worker.backend';
-//#endregion
 import { WorkerProcessClass } from './worker-process-class';
 
 
 @Morphi.Controller()
-export class BaseWorkerController extends WorkerProcessClass
-  //#region @backend
-  implements Morphi.BASE_CONTROLLER_INIT
-//#endregion
-{
-  //#region @backend
+export class BaseWorkerController extends WorkerProcessClass implements Morphi.BASE_CONTROLLER_INIT {
+
   get filename() {
     return __filename;
   }
-  //#endregion
+
 
   @Morphi.Http.GET('/')
   html(): Morphi.Response {
@@ -30,14 +26,15 @@ export class BaseWorkerController extends WorkerProcessClass
   }
 
   helloObj(): Morphi.Response<any> {
-    //#region @backendFunc
+
     return async (req, res) => { helo: 'asd' };
-    //#endregion
+
   }
 
+  //#region @notForNpm
   @Morphi.Http.GET()
   allprojects(): Morphi.Response<any> {
-    //#region @backendFunc
+
     return async (req, res) => {
       const db = await TnpDB.Instance();
       const projects = (await db.getProjects()).map(p => {
@@ -45,8 +42,9 @@ export class BaseWorkerController extends WorkerProcessClass
       });
       return projects;
     }
-    //#endregion
+
   }
+  //#endregion
 
   async initExampleDbData() {
     console.log('Hello from worker controller init funciton')
@@ -54,6 +52,4 @@ export class BaseWorkerController extends WorkerProcessClass
 
 }
 
-//#region @backend
 export default BootstrapWorker.bootstrap(BaseWorkerController);
-//#endregion
