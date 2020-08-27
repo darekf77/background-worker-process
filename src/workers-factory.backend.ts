@@ -4,6 +4,7 @@ import { TnpDB } from 'tnp-db';
 import { CLASS } from 'typescript-class-helpers';
 import { Helpers, Project } from 'tnp-helpers';
 import * as _ from 'lodash';
+import * as vm from 'vm';
 import { WorkerProcessClass } from './worker-process-class';
 import { BootstrapWorker } from './bootsrap-worker.backend';
 
@@ -11,7 +12,6 @@ import { BootstrapWorker } from './bootsrap-worker.backend';
 export class WorkersFactor {
 
   public static async create<T extends WorkerProcessClass = any>(classFN: Function, entities: Function[], autokill = false) {
-
     const db = await TnpDB.Instance();
     const name = CLASS.getName(classFN);
     if (!name || name === '') {
@@ -21,27 +21,62 @@ export class WorkersFactor {
       name: CLASS.getName(classFN)
     }, autokill);
     const host = `http://localhost:${servicePort}`;
-    // Helpers.run(``)
+
     const { controllers, app } = await Morphi.init({
       host,
-      onlyForBackendRemoteServerAccess: true,
+      mode: 'remote-backend',
       controllers: [classFN],
       entities
     }) as any;
 
+
     const singleton = _.first(controllers) as WorkerProcessClass;
+    const { URL } = require('url');
+    // @ts-ignore
+    singleton['host'] = new URL(host);
     const nearestProj = Project.nearestTo(singleton.filename);
     const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
     const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
-    const proc = Helpers.run(`ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile}`, { cwd: cwdForWorker }).async();
+    const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
+    const proc = Helpers.run(command, { cwd: cwdForWorker }).async();
     await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
+
 
     return {
       host,
       port: servicePort,
       instance: (singleton as any) as T,
-      proc
     }
   }
 
 }
+
+
+
+
+//#region context text
+// Helpers.run(``)
+
+
+    // const sandbox = {
+    //   require,
+    //   classFN,
+    //   host,
+    //   entities
+    // }
+    // const script = new vm.Script(`
+    // const Morphi = require('morphi').Morphi;
+    // const result = Morphi.init({
+    //   host,
+    //   mode: 'remote-backend',
+    //   controllers: [classFN],
+    //   entities
+    // });
+    // this.result = result;
+    // `);
+
+    // const context = vm.createContext(sandbox) as any;
+    // // context.
+    // script.runInContext(context);
+
+//#endregion

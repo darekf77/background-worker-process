@@ -13,6 +13,11 @@ export class BaseWorkerChildController extends BaseWorkerController {
   }
   //#endregion
 
+  @Morphi.Http.GET('/')
+  html(): Morphi.Response {
+    return async (req, res) => `<h1> hello worker </h1>`;
+  }
+
   @Morphi.Http.GET()
   hello(): Morphi.Response {
     return async (req, res) => 'hello from child worker!';
@@ -20,6 +25,10 @@ export class BaseWorkerChildController extends BaseWorkerController {
 
   hello2(): Morphi.Response {
     return async (req, res) => 'hello 2222!';
+  }
+
+  async initExampleDbData() {
+    console.log('Hello from child worker init funcitn')
   }
 
 }
