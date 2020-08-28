@@ -28,7 +28,7 @@ export class WorkersFactor {
     const { URL } = require('url');
     // @ts-ignore
     singleton['host'] = new URL(host);
-    const nearestProj = Project.nearestTo(singleton.filename);
+    const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
     const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
     const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
     const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
