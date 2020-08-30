@@ -1,4 +1,5 @@
 import { Morphi } from 'morphi';
+import { Helpers } from 'tnp-helpers';
 
 export abstract class WorkerProcessClass {
   //#region @backend
@@ -20,29 +21,27 @@ export abstract class WorkerProcessClass {
    * overrding function <strong> __worker_is_healty__</strong>
    */
   public get $$healty() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       let isResolve = false;
-      const promises = [
-        new Promise(resolve => setTimeout(() => {
-          if (!isResolve) {
-            isResolve = true;
-            reject(`[worker-process-class] Worker healty check timeout`)
-          }
-          resolve()
-        }, 1000)),
-        async () => {
-          const res = await this.__worker_is_healty__().received;
-          return res.body.booleanValue;
-        }
-      ]
-      try {
-        const [__, v2] = (await Promise.all(promises)) as boolean[];
+      setTimeout(() => {
         if (!isResolve) {
           isResolve = true;
-          resolve(v2);
+          Helpers.log(`[worker-process-class] Worker healty check timeout`);
+          resolve(false);
+        }
+      }, 10000);
+      try {
+        const workerIsOk = (await this.__worker_is_healty__().received).body.booleanValue;
+        if (!isResolve) {
+          isResolve = true;
+          resolve(workerIsOk);
         }
       } catch (error) {
-        reject(error);
+        if (!isResolve) {
+          isResolve = true;
+          Helpers.log(`[worker-process-class] Not able to acces worker with http: ${error.message}` );
+          resolve(false)
+        }
       }
     })
   }

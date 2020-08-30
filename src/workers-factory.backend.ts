@@ -5,9 +5,33 @@ import * as _ from 'lodash';
 import { WorkerProcessClass } from './worker-process-class';
 import { BootstrapWorker } from './bootsrap-worker.backend';
 
+export interface WorkersFactoryOptions {
+  /**
+   * default true
+   */
+  startWorkerServiceAsChildProcess?: boolean;
+  killByPortIfStartingServiceAsChildProcess?: boolean;
+}
+
 export class WorkersFactor {
 
-  public static async create<T extends WorkerProcessClass = any>(classFN: Function, entities: Function[], servicePort: number) {
+  public static async create<T extends WorkerProcessClass = any>(
+    classFN: Function,
+    entities: Function[],
+    servicePort: number,
+    options?: WorkersFactoryOptions,
+  ) {
+
+    if (!options) {
+      options = {};
+    }
+    if (_.isUndefined(options.startWorkerServiceAsChildProcess)) {
+      options.startWorkerServiceAsChildProcess = true;
+    }
+    if (_.isUndefined(options.killByPortIfStartingServiceAsChildProcess)) {
+      options.killByPortIfStartingServiceAsChildProcess = false;
+    }
+    const { startWorkerServiceAsChildProcess, killByPortIfStartingServiceAsChildProcess } = options;
 
     const name = CLASS.getName(classFN);
     if (!name || name === '') {
@@ -23,18 +47,21 @@ export class WorkersFactor {
       entities
     }) as any;
 
-
     const singleton = _.first(controllers) as WorkerProcessClass;
     const { URL } = require('url');
     // @ts-ignore
     singleton['host'] = new URL(host);
-    const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
-    const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
-    const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
-    const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
-    const proc = Helpers.run(command, { cwd: cwdForWorker }).async();
-    await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
-
+    if (startWorkerServiceAsChildProcess) {
+      const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
+      const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
+      const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
+      if (killByPortIfStartingServiceAsChildProcess) {
+        await Helpers.killProcessByPort(servicePort);
+      }
+      const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
+      const proc = Helpers.run(command, { cwd: cwdForWorker }).async();
+      await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
+    }
 
     return {
       host,
