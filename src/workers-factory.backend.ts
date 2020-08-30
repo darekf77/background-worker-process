@@ -4,13 +4,13 @@ import { Helpers, Project } from 'tnp-helpers';
 import * as _ from 'lodash';
 import { WorkerProcessClass } from './worker-process-class';
 import { BootstrapWorker } from './bootsrap-worker.backend';
+import chalk from 'chalk';
 
 export interface WorkersFactoryOptions {
   /**
    * default true
    */
   startWorkerServiceAsChildProcess?: boolean;
-  killByPortIfStartingServiceAsChildProcess?: boolean;
 }
 
 export class WorkersFactor {
@@ -28,10 +28,7 @@ export class WorkersFactor {
     if (_.isUndefined(options.startWorkerServiceAsChildProcess)) {
       options.startWorkerServiceAsChildProcess = true;
     }
-    if (_.isUndefined(options.killByPortIfStartingServiceAsChildProcess)) {
-      options.killByPortIfStartingServiceAsChildProcess = false;
-    }
-    const { startWorkerServiceAsChildProcess, killByPortIfStartingServiceAsChildProcess } = options;
+    const { startWorkerServiceAsChildProcess } = options;
 
     const name = CLASS.getName(classFN);
     if (!name || name === '') {
@@ -55,13 +52,18 @@ export class WorkersFactor {
       const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
       const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
       const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
-      if (killByPortIfStartingServiceAsChildProcess) {
-        await Helpers.killProcessByPort(servicePort);
-      }
+
+      await Helpers.killProcessByPort(servicePort);
+
       const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
       const proc = Helpers.run(command, { cwd: cwdForWorker }).async();
       await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
     }
+    Helpers.info(`Worker ${chalk.bold(name)} can be accessed:
+
+    ${host}/WorkerProcessClass/DbDaemonController/info
+
+    `);
 
     return {
       host,

@@ -17,11 +17,11 @@ export async function mainProcess() {
 
   const w1port = await portsManager.registerOnFreePort({
     name: CLASS.getName(BaseWorkerController)
-  }, autokill);
+  }, { killAlreadyRegisterd: true });
 
   const w2port = await portsManager.registerOnFreePort({
     name: CLASS.getName(BaseWorkerChildController)
-  }, autokill);
+  }, { killAlreadyRegisterd: true });
 
   const w1 = await WorkersFactor.create<BaseWorkerController>(BaseWorkerController, entities, w1port);
   const w2 = await WorkersFactor.create<BaseWorkerChildController>(BaseWorkerChildController, entities, w2port);
