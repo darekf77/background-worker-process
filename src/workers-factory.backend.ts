@@ -59,7 +59,7 @@ export class WorkersFactor {
       const proc = Helpers.run(command, { cwd: cwdForWorker }).async();
       await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
     }
-    Helpers.info(`Worker ${chalk.bold(name)} can be accessed:
+    Helpers.log(`Worker ${chalk.bold(name)} can be accessed:
 
     ${host}/WorkerProcessClass/DbDaemonController/info
 
