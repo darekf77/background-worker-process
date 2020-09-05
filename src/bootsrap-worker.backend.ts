@@ -14,7 +14,7 @@ export class BootstrapWorker {
         host,
         controllers: [classFN],
         entities,
-        mode: 'backend-only'
+        mode: 'backend/frontend-worker'
       }) as any;
       const singleton = _.first(controllers) as WorkerProcessClass;
       console.log(`hello from '${singleton.filename}`)

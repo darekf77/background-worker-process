@@ -11,6 +11,7 @@ export interface WorkersFactoryOptions {
    * default true
    */
   startWorkerServiceAsChildProcess?: boolean;
+  args?: string[] | string;
 }
 
 export class WorkersFactor {

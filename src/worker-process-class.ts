@@ -1,7 +1,7 @@
 import { Morphi } from 'morphi';
 import { Helpers } from 'tnp-helpers';
 
-export abstract class WorkerProcessClass {
+export abstract class WorkerProcessClass extends Morphi.Base.Controller<any> {
   //#region @backend
   abstract get filename(): string;
   //#endregion
@@ -39,7 +39,7 @@ export abstract class WorkerProcessClass {
       } catch (error) {
         if (!isResolve) {
           isResolve = true;
-          Helpers.log(`[worker-process-class] Not able to acces worker with http: ${error.message}` );
+          Helpers.log(`[worker-process-class] Not able to acces worker with http: ${error.message}`);
           resolve(false)
         }
       }
