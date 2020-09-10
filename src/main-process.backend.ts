@@ -7,20 +7,29 @@ import { TnpDB } from 'tnp-db';
 import { CLASS } from 'typescript-class-helpers';
 import { Morphi } from 'morphi';
 import { TestEntity } from './test-entity.backend';
+import { Helpers } from 'tnp-helpers';
 
 
 
 //#endregion
-export async function mainProcess() {
+export async function mainProcess(args: string) {
   //#region @notForNpm
   const entities = [
     Project,
     TestEntity
   ].filter(f => !!f);
-  const killAlreadyRegisterd = false;
+  // console.log(args);
+  let { killAlreadyRegisterd = false } = Helpers.cliTool.argsFrom(args);
   const db = await TnpDB.Instance();
   const portsManager = await db.portsManaber;
+  global['hideLog'] = false;
+  // console.log(`
 
+  // killAlreadyRegisterd: "${killAlreadyRegisterd}"
+  // killAlreadyRegisterd typeof: "${typeof killAlreadyRegisterd}"
+
+  // `)
+  // process.exit(0)
   const w1port = await portsManager.registerOnFreePort({
     name: CLASS.getName(BaseWorkerController)
   }, { killAlreadyRegisterd });
@@ -30,9 +39,15 @@ export async function mainProcess() {
   }, { killAlreadyRegisterd });
 
   const w1 = await WorkersFactor.create<BaseWorkerController>(
-    BaseWorkerController, entities, w1port);
+    BaseWorkerController, entities, w1port, {
+    killAlreadRegisteredProcess: false,
+    startWorkerServiceAsChildProcess: killAlreadyRegisterd
+  });
   const w2 = await WorkersFactor.create<BaseWorkerChildController>(
-    BaseWorkerChildController, entities, w2port);
+    BaseWorkerChildController, entities, w2port, {
+    killAlreadRegisteredProcess: false,
+    startWorkerServiceAsChildProcess: killAlreadyRegisterd
+  });
 
 
   console.log(`w1 is working on host ${w1.host}`);
@@ -54,14 +69,14 @@ export async function mainProcess() {
   const c = new TestEntity(1);
   c.subscribeRealtimeUpdates({
     callback: (a) => {
-      console.log(`[main-process] updating ${this.id}`, a?.body.text)
+      console.log(`[main-process] external update for entity 1`)
     }
   });
 
   const c2 = new TestEntity(2);
   c2.subscribeRealtimeUpdates({
     callback: (a) => {
-      console.log(`[main-process] updating ${this.id}`, a?.body.text);
+      console.log(`[main-process] external update for entity 2`);
     }
   });
 

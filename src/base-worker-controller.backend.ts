@@ -37,6 +37,18 @@ export class BaseWorkerController extends WorkerProcessClass implements Morphi.B
 
   }
 
+  @Morphi.Http.GET()
+  kill(): Morphi.Response<any> {
+    process.exit(0)
+  }
+
+  @Morphi.Http.GET('/info')
+  info(): Morphi.Response<any> {
+    return async (req, res) => {
+      return JSON.stringify(this.updates);
+    }
+  }
+
   //#region @notForNpm
   @Morphi.Http.GET()
   allprojects(): Morphi.Response<any> {
@@ -52,17 +64,21 @@ export class BaseWorkerController extends WorkerProcessClass implements Morphi.B
   }
   //#endregion
 
-  async initExampleDbData() {
-    console.log('Hello from worker controller init funciton');
-    setTimeout(() => {
-      // this.updateRealtime();
-    }, 2000);
+  async initExampleDbData(isWorker?: boolean) {
+    if (isWorker) {
+      setTimeout(() => {
+        this.updateRealtime();
+      }, 2000);
+    }
   }
+
+  updates = [];
 
   updateRealtime() {
     const id = 2;
     Morphi.Realtime.Server.TrigggerEntityChanges(TestEntity.by(id));
-    console.log(`realtime update of ${id}.. from worker ${CLASS.getNameFromObject(this)}`);
+    const msg = `realtime update of ${id}.. from worker ${CLASS.getNameFromObject(this)}`;
+    this.updates.push(`[${(new Date).getTime()}] ${msg}`)
     setTimeout(() => {
       this.updateRealtime();
     }, 2000);

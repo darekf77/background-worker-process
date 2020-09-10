@@ -30,17 +30,20 @@ export class BaseWorkerChildController extends BaseWorkerController {
   updateRealtime() {
     const id = 1;
     Morphi.Realtime.Server.TrigggerEntityChanges(TestEntity.by(id));
-    console.log(`realtime update of ${id}.. from worker ${CLASS.getNameFromObject(this)}`);
+    const msg = `realtime update of ${id}.. from worker ${CLASS.getNameFromObject(this)}`;
+    this.updates.push(`[${(new Date).getTime()}] ${msg}`)
     setTimeout(() => {
       this.updateRealtime();
     }, 2000);
   }
 
-  async initExampleDbData() {
-    console.log('Hello from child worker init funcitn')
-    setTimeout(() => {
-      // this.updateRealtime();
-    }, 2000);
+  async initExampleDbData(isWorker?: boolean) {
+    if (isWorker) {
+      setTimeout(() => {
+        this.updateRealtime();
+      }, 2000);
+    }
+
   }
 
 }

@@ -11,7 +11,9 @@ export interface WorkersFactoryOptions {
    * default true
    */
   startWorkerServiceAsChildProcess?: boolean;
+  killAlreadRegisteredProcess?: boolean;
   args?: string[] | string;
+  disabledRealtime?: boolean;
 }
 
 export class WorkersFactor {
@@ -29,10 +31,23 @@ export class WorkersFactor {
     if (_.isUndefined(options.startWorkerServiceAsChildProcess)) {
       options.startWorkerServiceAsChildProcess = true;
     }
-    const { startWorkerServiceAsChildProcess } = options;
+    if (_.isUndefined(options.killAlreadRegisteredProcess)) {
+      options.killAlreadRegisteredProcess = true;
+    }
+    if (_.isUndefined(options.disabledRealtime)) {
+      options.disabledRealtime = false;
+    }
+    const { startWorkerServiceAsChildProcess,
+      killAlreadRegisteredProcess,
+      disabledRealtime,
+    } = options;
 
-    const name = CLASS.getName(classFN);
-    if (!name || name === '') {
+    if (killAlreadRegisteredProcess) {
+      await Helpers.killProcessByPort(servicePort);
+    }
+
+    const nameOfWorker = CLASS.getName(classFN);
+    if (!nameOfWorker || nameOfWorker === '') {
       Helpers.error(`[b-w-p] Wrong name for class.. not able to create work`);
     }
 
@@ -42,7 +57,8 @@ export class WorkersFactor {
       host,
       mode: 'remote-backend',
       controllers: [classFN],
-      entities
+      entities,
+      disabledRealtime
     }) as any;
 
     const singleton = _.first(controllers) as WorkerProcessClass;
@@ -50,19 +66,19 @@ export class WorkersFactor {
     // @ts-ignore
     singleton['host'] = new URL(host);
     if (startWorkerServiceAsChildProcess) {
+      console.log(`STARING SERVIVCE FOR ${nameOfWorker}`)
       const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
       const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
       const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
 
-      await Helpers.killProcessByPort(servicePort);
-
       const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
-      const proc = Helpers.run(command, { cwd: cwdForWorker }).async();
+      const proc = Helpers.run(command, { cwd: cwdForWorker }).async(true);
+      console.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`)
       await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
     }
-    Helpers.log(`Worker ${chalk.bold(name)} can be accessed:
+    console.log(`Worker ${chalk.bold(nameOfWorker)} can be accessed:
 
-    ${host}/WorkerProcessClass/DbDaemonController/info
+    ${Morphi.getHttpPathBy<any>(classFN as any, servicePort, 'info')}
 
     `);
 
