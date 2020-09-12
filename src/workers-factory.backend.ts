@@ -62,17 +62,29 @@ export class WorkersFactor {
     }) as any;
 
     const singleton = _.first(controllers) as WorkerProcessClass;
-    const { URL } = require('url');
-    // @ts-ignore
-    singleton['host'] = new URL(host);
+
     if (startWorkerServiceAsChildProcess) {
-      console.log(`STARING SERVIVCE FOR ${nameOfWorker}`)
+      // console.log(`STARING SERVIVCE FOR ${nameOfWorker}`)
       const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
       const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
       const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
 
-      const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} --port ${servicePort}`;
-      const proc = Helpers.run(command, { cwd: cwdForWorker }).async(true);
+      // const logFileName = `tmp-worker-log-${path.basename(singleton.filename.replace(/\.js$/, ''))}.txt`;
+
+      const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} `
+        + `--port ${servicePort} `
+      // + `> ${logFileName}`;
+      // console.log(`[worker-factor]
+      // command for sub-process: ${command}
+      // logFileName: ${logFileName}
+      // `)
+      const proc = Helpers.run(command, { cwd: cwdForWorker }).async(
+        true
+      );
+      // proc.stdout.on(`data`, (a) => {
+      //   console.log(`[${logFileName}] \n
+      //   `+ a);
+      // })
       console.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`)
       await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
     }

@@ -11,7 +11,7 @@ import { CLASS } from 'typescript-class-helpers';
 
 @Morphi.Controller({
   className: 'BaseWorkerController',
-  entity: TestEntity
+  // entity: TestEntity
 })
 export class BaseWorkerController extends WorkerProcessClass implements Morphi.BASE_CONTROLLER_INIT {
 
@@ -75,13 +75,16 @@ export class BaseWorkerController extends WorkerProcessClass implements Morphi.B
   updates = [];
 
   updateRealtime() {
-    const id = 2;
+    const id = 1;
     Morphi.Realtime.Server.TrigggerEntityChanges(TestEntity.by(id));
-    const msg = `realtime update of ${id}.. from worker ${CLASS.getNameFromObject(this)}`;
+    const msg = `realtime update of (${CLASS.getName(TestEntity)}, id:${id}).. from worker ${CLASS.getNameFromObject(this)}`;
     this.updates.push(`[${(new Date).getTime()}] ${msg}`)
     setTimeout(() => {
       this.updateRealtime();
     }, 2000);
+    // process.stdout.on('data', (data) => {
+    //   this.updates.push(data?.toString());
+    // })
   }
 
 

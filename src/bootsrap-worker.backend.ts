@@ -9,19 +9,19 @@ export class BootstrapWorker {
   static bootstrap(classFN: typeof WorkerProcessClass, entities = []) {
 
     return async (port) => {
-      const host = `http://localhost:${port}`
-      const { controllers, app, connection } = await Morphi.init({
+      const host = `http://localhost:${port}`;
+      const controllers = [classFN];
+
+      const context = await Morphi.init({
         host,
-        controllers: [classFN],
+        controllers,
         entities,
         mode: 'backend/frontend-worker'
       }) as any;
-      const singleton = _.first(controllers) as WorkerProcessClass;
+      const singleton = _.first(context.controllers) as WorkerProcessClass;
       console.log(`hello from '${singleton.filename}`)
       console.log(BootstrapWorker.READY_MESSAGE + ` on pid: ${process.pid}`);
-      return {
-        controllers, app, connection
-      }
+      return context;
     }
   }
 

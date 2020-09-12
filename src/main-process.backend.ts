@@ -2,24 +2,18 @@
 import { WorkersFactor } from './workers-factory.backend';
 import { BaseWorkerController } from './base-worker-controller.backend';
 import { BaseWorkerChildController } from './base-worker-child-controller.backend';
-import { Project } from './project';
+import { Project, SubProject } from './project';
 import { TnpDB } from 'tnp-db';
 import { CLASS } from 'typescript-class-helpers';
 import { Morphi } from 'morphi';
-import { TestEntity } from './test-entity.backend';
+import { TestEntity, TestEntity2 } from './test-entity.backend';
 import { Helpers } from 'tnp-helpers';
-
-
 
 //#endregion
 export async function mainProcess(args: string) {
   //#region @notForNpm
-  const entities = [
-    Project,
-    TestEntity
-  ].filter(f => !!f);
-  // console.log(args);
   let { killAlreadyRegisterd = false } = Helpers.cliTool.argsFrom(args);
+
   const db = await TnpDB.Instance();
   const portsManager = await db.portsManaber;
   global['hideLog'] = false;
@@ -39,12 +33,12 @@ export async function mainProcess(args: string) {
   }, { killAlreadyRegisterd });
 
   const w1 = await WorkersFactor.create<BaseWorkerController>(
-    BaseWorkerController, entities, w1port, {
+    BaseWorkerController, [Project, TestEntity], w1port, {
     killAlreadRegisteredProcess: false,
     startWorkerServiceAsChildProcess: killAlreadyRegisterd
   });
   const w2 = await WorkersFactor.create<BaseWorkerChildController>(
-    BaseWorkerChildController, entities, w2port, {
+    BaseWorkerChildController, [SubProject, TestEntity2], w2port, {
     killAlreadRegisteredProcess: false,
     startWorkerServiceAsChildProcess: killAlreadyRegisterd
   });
@@ -73,7 +67,7 @@ export async function mainProcess(args: string) {
     }
   });
 
-  const c2 = new TestEntity(2);
+  const c2 = new TestEntity2(2);
   c2.subscribeRealtimeUpdates({
     callback: (a) => {
       console.log(`[main-process] external update for entity 2`);

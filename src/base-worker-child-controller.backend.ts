@@ -1,12 +1,12 @@
 import { Morphi } from 'morphi';
 import { BaseWorkerController } from './base-worker-controller.backend';
 import { BootstrapWorker } from './bootsrap-worker.backend';
-import { TestEntity } from './test-entity.backend';
+import { TestEntity, TestEntity2 } from './test-entity.backend';
 import { CLASS } from 'typescript-class-helpers';
 
 @Morphi.Controller({
   className: 'BaseWorkerChildController',
-  entity: TestEntity
+  // entity: TestEntity2
 })
 export class BaseWorkerChildController extends BaseWorkerController {
   get filename() {
@@ -28,9 +28,9 @@ export class BaseWorkerChildController extends BaseWorkerController {
   }
 
   updateRealtime() {
-    const id = 1;
-    Morphi.Realtime.Server.TrigggerEntityChanges(TestEntity.by(id));
-    const msg = `realtime update of ${id}.. from worker ${CLASS.getNameFromObject(this)}`;
+    const id = 2;
+    Morphi.Realtime.Server.TrigggerEntityChanges(TestEntity2.by(id));
+    const msg = `realtime update of (${CLASS.getName(TestEntity2)}, id:${id}).. from worker ${CLASS.getNameFromObject(this)}`;
     this.updates.push(`[${(new Date).getTime()}] ${msg}`)
     setTimeout(() => {
       this.updateRealtime();
@@ -43,7 +43,9 @@ export class BaseWorkerChildController extends BaseWorkerController {
         this.updateRealtime();
       }, 2000);
     }
-
+    // process.stdout.on('data', (data) => {
+    //   this.updates.push(data?.toString());
+    // })
   }
 
 }
