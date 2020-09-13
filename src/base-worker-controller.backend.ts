@@ -5,7 +5,9 @@ import { TnpDB } from 'tnp-db';
 import { Project } from './project';
 import { BootstrapWorker } from './bootsrap-worker.backend';
 import { WorkerProcessClass } from './worker-process-class';
+//#region @notForNpm
 import { TestEntity } from './test-entity.backend';
+//#endregion
 import { CLASS } from 'typescript-class-helpers';
 
 
@@ -75,6 +77,7 @@ export class BaseWorkerController extends WorkerProcessClass implements Morphi.B
   updates = [];
 
   updateRealtime() {
+    //#region @notForNpm
     const id = 1;
     Morphi.Realtime.Server.TrigggerEntityChanges(TestEntity.by(id));
     const msg = `realtime update of (${CLASS.getName(TestEntity)}, id:${id}).. from worker ${CLASS.getNameFromObject(this)}`;
@@ -85,6 +88,7 @@ export class BaseWorkerController extends WorkerProcessClass implements Morphi.B
     // process.stdout.on('data', (data) => {
     //   this.updates.push(data?.toString());
     // })
+    //#endregion
   }
 
 
