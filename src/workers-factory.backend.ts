@@ -53,13 +53,15 @@ export class WorkersFactor {
 
     const host = `http://localhost:${servicePort}`;
 
-    const { controllers, app } = await Morphi.init({
+    const context = await Morphi.init({
       host,
       mode: 'remote-backend',
       controllers: [classFN],
       entities,
       disabledRealtime
-    }) as any;
+    });
+
+    const  { controllers } = context;
 
     const singleton = _.first(controllers) as WorkerProcessClass;
 
@@ -98,6 +100,7 @@ export class WorkersFactor {
       host,
       port: servicePort,
       instance: (singleton as any) as T,
+      context
     }
   }
 
