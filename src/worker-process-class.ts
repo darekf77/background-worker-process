@@ -46,5 +46,4 @@ export abstract class WorkerProcessClass extends Morphi.Base.Controller<any> {
     })
   }
 
-  readonly host: URL;
 }
