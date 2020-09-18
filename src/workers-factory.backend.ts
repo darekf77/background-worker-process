@@ -14,6 +14,7 @@ export interface WorkersFactoryOptions {
   killAlreadRegisteredProcess?: boolean;
   args?: string[] | string;
   disabledRealtime?: boolean;
+  preventSameContexts?: boolean;
 }
 
 export class WorkersFactor {
@@ -31,6 +32,9 @@ export class WorkersFactor {
     if (_.isUndefined(options.startWorkerServiceAsChildProcess)) {
       options.startWorkerServiceAsChildProcess = true;
     }
+    if (_.isUndefined(options.preventSameContexts)) {
+      options.preventSameContexts = false;
+    }
     if (_.isUndefined(options.killAlreadRegisteredProcess)) {
       options.killAlreadRegisteredProcess = true;
     }
@@ -40,6 +44,7 @@ export class WorkersFactor {
     const { startWorkerServiceAsChildProcess,
       killAlreadRegisteredProcess,
       disabledRealtime,
+      preventSameContexts,
     } = options;
 
     if (killAlreadRegisteredProcess) {
@@ -53,6 +58,10 @@ export class WorkersFactor {
 
     const host = `http://localhost:${servicePort}`;
 
+    if (preventSameContexts) {
+      Morphi.destroyContext(host);
+    }
+
     const context = await Morphi.init({
       host,
       mode: 'remote-backend',
@@ -61,7 +70,7 @@ export class WorkersFactor {
       disabledRealtime
     });
 
-    const  { controllers } = context;
+    const { controllers } = context;
 
     const singleton = _.first(controllers) as WorkerProcessClass;
 
