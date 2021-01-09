@@ -23,5 +23,8 @@
     "ugly": false
   },
   "isGenerated": false,
-  "requiredServers": []
+  "requiredServers": [],
+  "license": "MIT",
+  "private": false,
+  "main": "index.js"
 }
