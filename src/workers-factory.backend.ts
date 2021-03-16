@@ -96,10 +96,10 @@ export class WorkersFactor {
       //   console.log(`[${logFileName}] \n
       //   `+ a);
       // })
-      console.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`)
+      Helpers.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`)
       await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
     }
-    console.log(`Worker ${chalk.bold(nameOfWorker)} can be accessed:
+    Helpers.log(`Worker ${chalk.bold(nameOfWorker)} can be accessed:
 
     ${Morphi.getHttpPathBy<any>(classFN as any, servicePort, 'info')}
 
