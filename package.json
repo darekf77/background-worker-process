@@ -34,7 +34,7 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "tnp-helpers": "~0.0.24"
+    "tnp-helpers": "~0.0.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.3",
