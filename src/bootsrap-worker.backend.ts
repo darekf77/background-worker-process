@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { _ } from 'tnp-core';
 import { Morphi } from 'morphi';
 import { WorkerProcessClass } from './worker-process-class';
 

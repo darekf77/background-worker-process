@@ -1,10 +1,10 @@
 import { Morphi } from 'morphi';
 import { CLASS } from 'typescript-class-helpers';
 import { Helpers, Project } from 'tnp-helpers';
-import * as _ from 'lodash';
+import { _ } from 'tnp-core';
 import { WorkerProcessClass } from './worker-process-class';
 import { BootstrapWorker } from './bootsrap-worker.backend';
-import chalk from 'chalk';
+import { CLI } from 'tnp-cli';
 
 export interface WorkersFactoryOptions {
   /**
@@ -99,7 +99,7 @@ export class WorkersFactor {
       Helpers.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`)
       await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
     }
-    Helpers.log(`Worker ${chalk.bold(nameOfWorker)} can be accessed:
+    Helpers.log(`Worker ${CLI.chalk.bold(nameOfWorker)} can be accessed:
 
     ${Morphi.getHttpPathBy<any>(classFN as any, servicePort, 'info')}
 
