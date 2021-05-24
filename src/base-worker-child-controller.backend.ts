@@ -1,3 +1,4 @@
+import { crossPlatformPath } from 'tnp-core';
 import { Morphi } from 'morphi';
 import { BaseWorkerController } from './base-worker-controller.backend';
 import { BootstrapWorker } from './bootsrap-worker.backend';
@@ -12,7 +13,7 @@ import { CLASS } from 'typescript-class-helpers';
 })
 export class BaseWorkerChildController extends BaseWorkerController {
   get filename() {
-    return __filename;
+    return crossPlatformPath(__filename);
   }
 
   @Morphi.Http.GET('/')

@@ -77,12 +77,18 @@ export class WorkersFactor {
     if (startWorkerServiceAsChildProcess) {
       // console.log(`STARING SERVIVCE FOR ${nameOfWorker}`)
       const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
-      const realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
+      console.log(`nearestProj.location: ${!nearestProj ? 'NOTHING!' : nearestProj.location}`)
+      let realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
+      console.log(`realtivePathToFile: ${realtivePathToFile}`)
+      console.log(`singleton.filename: ${singleton.filename}`)
       const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
+      console.log(`cwdForWorker: ${cwdForWorker}`)
 
       // const logFileName = `tmp-worker-log-${path.basename(singleton.filename.replace(/\.js$/, ''))}.txt`;
-
-      const command = `npm-run ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} `
+      if(process.platform === 'win32') {
+        realtivePathToFile = realtivePathToFile.replace(/^\//,'');
+      }
+      const command = `npx ts-node run.js --RELATIVEPATHoverride=${realtivePathToFile} `
         + `--port ${servicePort} `
       // + `> ${logFileName}`;
       // console.log(`[worker-factor]
@@ -96,8 +102,12 @@ export class WorkersFactor {
       //   console.log(`[${logFileName}] \n
       //   `+ a);
       // })
-      Helpers.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`)
-      await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
+      Helpers.log(`[worker-factor] process ${proc.pid} for "${nameOfWorker}"`);
+      if(process.platform === 'win32') {
+        Helpers.info('[background-worker-process] look at external console for errors');
+      } else {
+        await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);  
+      }
     }
     Helpers.log(`Worker ${CLI.chalk.bold(nameOfWorker)} can be accessed:
 

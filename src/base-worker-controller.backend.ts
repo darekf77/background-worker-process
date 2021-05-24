@@ -1,3 +1,4 @@
+import { crossPlatformPath } from 'tnp-core';
 import { Morphi } from 'morphi';
 //#region @notForNpm
 import { TnpDB } from 'tnp-db';
@@ -18,7 +19,7 @@ import { CLASS } from 'typescript-class-helpers';
 export class BaseWorkerController extends WorkerProcessClass implements Morphi.BASE_CONTROLLER_INIT {
 
   get filename() {
-    return __filename;
+    return crossPlatformPath(__filename);
   }
 
   readonly args: string[] = [];
