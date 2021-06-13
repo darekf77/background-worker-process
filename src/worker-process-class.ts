@@ -6,6 +6,7 @@ export abstract class WorkerProcessClass extends Morphi.Base.Controller<any> {
   abstract get filename(): string;
   //#endregion
 
+  //#region worker is healty
   @Morphi.Http.GET('/workerishealty')
   protected __worker_is_healty__(): Morphi.Response<boolean> {
     //#region @backendFunc
@@ -14,6 +15,7 @@ export abstract class WorkerProcessClass extends Morphi.Base.Controller<any> {
     }
     //#endregion
   }
+  //#endregion
 
   /**
    * <<< Internal function >>> to check if worker is healty
