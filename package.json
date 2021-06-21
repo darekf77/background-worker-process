@@ -105,7 +105,7 @@
     "axios": "0.17.1",
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
-    "background-worker-process": "~0.0.23",
+    "background-worker-process": "~0.0.24",
     "bcryptjs": "2.4.3",
     "body-parser": "1.18.2",
     "bootstrap": "4.3.1",
@@ -275,5 +275,5 @@
       "pre-push": "tnp deps:show:if:standalone"
     }
   },
-  "lastBuildTagHash": "abbd9ead4e7e62971eb08582ff8bacf002f3bfcd"
+  "lastBuildTagHash": "ab862497e35ac4a0b9c0a37e85be497246148214"
 }
