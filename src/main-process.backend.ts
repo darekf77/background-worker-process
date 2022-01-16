@@ -3,7 +3,7 @@ import { WorkersFactor } from './workers-factory.backend';
 import { BaseWorkerController } from './base-worker-controller.backend';
 import { BaseWorkerChildController } from './base-worker-child-controller.backend';
 import { Project, SubProject } from './project';
-import { TnpDB } from 'tnp-db';
+import { FiredevPorts } from 'firedev-ports';
 import { CLASS } from 'typescript-class-helpers';
 import { Morphi } from 'morphi';
 import { TestEntity, TestEntity2 } from './test-entity.backend';
@@ -14,8 +14,8 @@ export async function mainProcess(args: string) {
   //#region @notForNpm
   let { killAlreadyRegisterd = false } = Helpers.cliTool.argsFrom(args);
 
-  const db = await TnpDB.Instance();
-  const portsManager = await db.portsManaber;
+  const db = await FiredevPorts.instance;
+
   global['hideLog'] = false;
   // console.log(`
 
@@ -24,13 +24,11 @@ export async function mainProcess(args: string) {
 
   // `)
   // process.exit(0)
-  const w1port = await portsManager.registerOnFreePort({
-    name: CLASS.getName(BaseWorkerController)
-  }, { killAlreadyRegisterd });
+  const w1port = await db.registerUniqeServiceAndGetPort(CLASS.getName(BaseWorkerController)
+    , killAlreadyRegisterd);
 
-  const w2port = await portsManager.registerOnFreePort({
-    name: CLASS.getName(BaseWorkerChildController)
-  }, { killAlreadyRegisterd });
+  const w2port = await db.registerUniqeServiceAndGetPort(CLASS.getName(BaseWorkerChildController)
+    , killAlreadyRegisterd);
 
   const w1 = await WorkersFactor.create<BaseWorkerController>(
     BaseWorkerController, [Project, TestEntity], w1port, {
@@ -87,4 +85,3 @@ export async function mainProcess(args: string) {
   // process.exit(0)
   //#endregion
 }
-

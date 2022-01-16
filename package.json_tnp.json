@@ -11,7 +11,7 @@
     "ignoreDepsPattern": [],
     "includeAsDev": [],
     "includeOnly": [
-      "tnp-helpers"
+      "firedev-ports"
     ],
     "dependencies": {},
     "linkedFolders": []

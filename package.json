@@ -12,7 +12,7 @@
       "ignoreDepsPattern": [],
       "includeAsDev": [],
       "includeOnly": [
-        "tnp-helpers"
+        "firedev-ports"
       ],
       "dependencies": {},
       "linkedFolders": []
@@ -34,9 +34,7 @@
   "version": "0.0.35",
   "license": "MIT",
   "main": "index.js",
-  "dependencies": {
-    "tnp-helpers": "~0.0.73"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "0.901.3",
     "@angular-devkit/build-optimizer": "0.900.0-rc.7",
@@ -240,6 +238,7 @@
     "tnp-config": "~1.0.20",
     "tnp-core": "~1.0.34",
     "tnp-db": "~0.0.44",
+    "tnp-helpers": "~0.0.73",
     "tnp-models": "~0.0.37",
     "tnp-tools": "~0.0.46",
     "tnp-ui": "~0.0.33",

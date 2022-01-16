@@ -1,9 +1,5 @@
 import { crossPlatformPath } from 'tnp-core';
 import { Morphi } from 'morphi';
-//#region @notForNpm
-import { TnpDB } from 'tnp-db';
-//#endregion
-import { Project } from './project';
 import { BootstrapWorker } from './bootsrap-worker.backend';
 import { WorkerProcessClass } from './worker-process-class';
 //#region @notForNpm
@@ -52,20 +48,21 @@ export class BaseWorkerController extends WorkerProcessClass implements Morphi.B
     }
   }
 
-  //#region @notForNpm
-  @Morphi.Http.GET()
-  allprojects(): Morphi.Response<any> {
+  // TODO
+  //  //#region @notForNpm
+  //  @Morphi.Http.GET()
+  //  allprojects(): Morphi.Response<any> {
 
-    return async (req, res) => {
-      const db = await TnpDB.Instance();
-      const projects = (await db.getProjects()).map(p => {
-        return Project.From(p.locationOfProject);
-      });
-      return projects;
-    }
+  //    return async (req, res) => {
+  //      const db = await TnpDB.Instance();
+  //      const projects = (await db.getProjects()).map(p => {
+  //        return Project.From(p.locationOfProject);
+  //      });
+  //      return projects;
+  //    }
 
-  }
-  //#endregion
+  //  }
+  //  //#endregion
 
   async initExampleDbData(isWorker?: boolean) {
     if (isWorker) {
