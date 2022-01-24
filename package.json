@@ -261,5 +261,8 @@
     "zone.js": "0.10.2"
   },
   "private": false,
-  "lastBuildTagHash": "55f3fac521fc3fb8da1f2e256656f235ff123610"
+  "lastBuildTagHash": "55f3fac521fc3fb8da1f2e256656f235ff123610",
+  "recreatedFrom": {
+    "tnp.json": true
+  }
 }
