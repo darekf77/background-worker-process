@@ -2,11 +2,7 @@
   "resources": [
     "README.md"
   ],
-  "isCoreProject": false,
-  "useFramework": false,
-  "type": "isomorphic-lib",
-  "required": [],
-  "version": "v2",
+
   "overrided": {
     "ignoreDepsPattern": [],
     "includeAsDev": [],
@@ -22,10 +18,19 @@
     "obscure": false,
     "ugly": false
   },
+  "isCoreProject": false,
+  "useFramework": false,
+
+  "type": "isomorphic-lib",
+
+  "required": [],
+
+  "version": "v3",
+
   "isGenerated": false,
-  "requiredServers": [],
+  'requiredServers': [],
   "license": "MIT",
-  "private": false,
-  "main": "index.js",
-  "workerPlugins": {}
+  'private': false,
+  'main': 'index.js',
+  'workerPlugins': {},
 }
