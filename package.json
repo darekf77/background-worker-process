@@ -1,6 +1,6 @@
 {
   "name": "background-worker-process",
-  "version": "13.0.4",
+  "version": "13.0.5",
   "license": "MIT",
   "dependencies": {
     "firedev-ports": "~13.0.3"
