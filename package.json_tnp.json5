@@ -18,10 +18,10 @@
     "obscure": false,
     "ugly": false
   },
-  "isCoreProject": false,
-  "useFramework": false,
-
   "type": "isomorphic-lib",
+  "isCoreProject": false,
+
+  "useFramework": false,
 
   "required": [],
 
