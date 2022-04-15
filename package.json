@@ -6,7 +6,7 @@
     "firedev-ports": "~13.0.13"
   },
   "private": false,
-  "lastBuildTagHash": "21d02ae033daeea9ffba7d0dc01fcffebffc9d89",
+  "lastBuildTagHash": "dce7d3a67cf294da1266f4b3d6de6ea6c0e82dea",
   "main": "index.js",
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.2.5",
@@ -81,7 +81,7 @@
     "babel-core": "6.25.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-es2015": "6.24.1",
-    "background-worker-process": "~13.0.12",
+    "background-worker-process": "~13.0.13",
     "bcryptjs": "2.4.3",
     "body-parser": "1.18.2",
     "bootstrap": "5.1.3",
