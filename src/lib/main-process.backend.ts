@@ -5,7 +5,7 @@ import { BaseWorkerChildController } from './base-worker-child-controller.backen
 import { Project, SubProject } from './project';
 import { FiredevPorts } from 'firedev-ports';
 import { CLASS } from 'typescript-class-helpers';
-import { Morphi } from 'morphi';
+import { Morphi as Firedev } from 'morphi';
 import { TestEntity, TestEntity2 } from './test-entity.backend';
 import { Helpers } from 'tnp-helpers';
 
@@ -59,18 +59,17 @@ export async function mainProcess(args: string) {
 
 
   const c = new TestEntity(1);
-  c.subscribeRealtimeUpdates({
-    callback: (a) => {
-      console.log(`[main-process] external update for entity 1`)
-    }
+
+  Firedev.Realtime.Browser.listenChangesEntityObjy(c).subscribe(() => {
+    console.log(`[main-process] external update for entity 1`)
   });
 
   const c2 = new TestEntity2(2);
-  c2.subscribeRealtimeUpdates({
-    callback: (a) => {
-      console.log(`[main-process] external update for entity 2`);
-    }
+
+  Firedev.Realtime.Browser.listenChangesEntityObjy(c2).subscribe(() => {
+    console.log(`[main-process] external update for entity 2`)
   });
+
 
   // try {
   //   const data = await w1.instance.allprojects().received;

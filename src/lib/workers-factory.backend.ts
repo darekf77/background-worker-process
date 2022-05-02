@@ -1,4 +1,4 @@
-import { Morphi } from 'morphi';
+import { Morphi as Firedev } from 'morphi';
 import { CLASS } from 'typescript-class-helpers';
 import { Helpers, Project } from 'tnp-helpers';
 import { _ } from 'tnp-core';
@@ -59,10 +59,10 @@ export class WorkersFactor {
     const host = `http://localhost:${servicePort}`;
 
     if (preventSameContexts) {
-      Morphi.destroyContext(host);
+      Firedev.destroyContext(host);
     }
 
-    const context = await Morphi.init({
+    const context = await Firedev.init({
       host,
       mode: 'remote-backend',
       controllers: [classFN],
@@ -106,12 +106,12 @@ export class WorkersFactor {
       if(process.platform === 'win32') {
         Helpers.info('[background-worker-process] look at external console for errors');
       } else {
-        await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);  
+        await Helpers.waitForMessegeInStdout(proc, BootstrapWorker.READY_MESSAGE);
       }
     }
     Helpers.log(`Worker ${CLI.chalk.bold(nameOfWorker)} can be accessed:
 
-    ${Morphi.getHttpPathBy<any>(classFN as any, servicePort, 'info')}
+    ${Firedev.getHttpPathBy<any>(classFN as any, servicePort, 'info')}
 
     `);
 

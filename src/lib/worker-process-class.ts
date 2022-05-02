@@ -1,14 +1,14 @@
-import { Morphi } from 'morphi';
+import { Morphi as Firedev } from 'morphi';
 import { Helpers } from 'tnp-helpers';
 
-export abstract class WorkerProcessClass extends Morphi.Base.Controller<any> {
+export abstract class WorkerProcessClass extends Firedev.Base.Controller<any> {
   //#region @backend
   abstract get filename(): string;
   //#endregion
 
   //#region worker is healty
-  @Morphi.Http.GET('/workerishealty')
-  protected __worker_is_healty__(): Morphi.Response<boolean> {
+  @Firedev.Http.GET('/workerishealty')
+  protected __worker_is_healty__(): Firedev.Response<boolean> {
     //#region @backendFunc
     return {
       send: true

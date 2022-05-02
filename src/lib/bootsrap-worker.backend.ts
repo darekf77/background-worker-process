@@ -1,5 +1,5 @@
 import { _ } from 'tnp-core';
-import { Morphi } from 'morphi';
+import { Morphi as Firedev } from 'morphi';
 import { WorkerProcessClass } from './worker-process-class';
 
 export class BootstrapWorker {
@@ -12,7 +12,7 @@ export class BootstrapWorker {
       const host = `http://localhost:${port}`;
       const controllers = [classFN];
 
-      const context = await Morphi.init({
+      const context = await Firedev.init({
         host,
         controllers,
         entities,
