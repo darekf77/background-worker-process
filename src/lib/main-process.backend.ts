@@ -58,17 +58,17 @@ export async function mainProcess(args: string) {
   // }
 
 
-  const c = new TestEntity(1);
+  // const c = new TestEntity(1);
 
-  Firedev.Realtime.Browser.listenChangesEntityObjy(c).subscribe(() => {
-    console.log(`[main-process] external update for entity 1`)
-  });
+  // Firedev.Realtime.Browser.listenChangesEntityObjy(c).subscribe(() => {
+  //   console.log(`[main-process] external update for entity 1`)
+  // });
 
-  const c2 = new TestEntity2(2);
+  // const c2 = new TestEntity2(2);
 
-  Firedev.Realtime.Browser.listenChangesEntityObjy(c2).subscribe(() => {
-    console.log(`[main-process] external update for entity 2`)
-  });
+  // Firedev.Realtime.Browser.listenChangesEntityObjy(c2).subscribe(() => {
+  //   console.log(`[main-process] external update for entity 2`)
+  // });
 
 
   // try {
