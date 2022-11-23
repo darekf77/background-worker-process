@@ -163,7 +163,7 @@
     "mkdirp": "0.5.1",
     "mocha": "5.2.0",
     "moment": "2.22.2",
-    "morphi": "~13.1.1",
+    "morphi": "~13.1.4",
     "ng-packagr": "13.0.0",
     "ng-talkback": "~13.1.16",
     "ng2-logger": "~13.1.2",
@@ -238,6 +238,6 @@
   "private": false,
   "main": "index.js",
   "name": "background-worker-process",
-  "version": "13.1.24",
+  "version": "13.1.25",
   "lastBuildTagHash": "dcd99f835dfea7a17fbbe11839867ced9a62bba2"
 }
