@@ -238,6 +238,6 @@
   "private": false,
   "main": "index.js",
   "name": "background-worker-process",
-  "version": "13.1.25",
+  "version": "13.1.26",
   "lastBuildTagHash": "dcd99f835dfea7a17fbbe11839867ced9a62bba2"
 }
