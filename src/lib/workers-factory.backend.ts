@@ -70,7 +70,7 @@ export class WorkersFactor {
       disabledRealtime
     });
 
-    const { controllers } = context;
+    const controllers = context.allControllersInstances;
 
     const singleton = _.first(controllers) as WorkerProcessClass;
 
