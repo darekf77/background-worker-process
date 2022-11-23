@@ -74,7 +74,7 @@
     "accepts": "1.3.4",
     "any-project-cli": "~13.1.13",
     "axios": "0.17.1",
-    "background-worker-process": "~13.1.27",
+    "background-worker-process": "~13.1.28",
     "bcryptjs": "2.4.3",
     "better-sqlite3": "7.6.2",
     "body-parser": "1.18.2",
@@ -239,5 +239,5 @@
   "main": "index.js",
   "name": "background-worker-process",
   "version": "13.1.28",
-  "lastBuildTagHash": "882f753cfdf85110a2e055848a3b1f61932adcfd"
+  "lastBuildTagHash": "3e0bb2c3d5325b32b718e503dd09c17ecc837b30"
 }
