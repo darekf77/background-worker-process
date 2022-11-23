@@ -18,7 +18,7 @@ export class BootstrapWorker {
         entities,
         mode: 'backend/frontend-worker'
       }) as any;
-      const singleton = _.first(context.controllers) as WorkerProcessClass;
+      const singleton = _.first(context.allControllersInstances) as WorkerProcessClass;
       console.log(`hello from '${singleton.filename}`)
       console.log(BootstrapWorker.READY_MESSAGE + ` on pid: ${process.pid}`);
       return context;
