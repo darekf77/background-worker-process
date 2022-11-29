@@ -77,12 +77,12 @@ export class WorkersFactor {
     if (startWorkerServiceAsChildProcess) {
       // console.log(`STARING SERVIVCE FOR ${nameOfWorker}`)
       const nearestProj = Project.nearestTo(singleton.filename, { onlyOutSideNodeModules: true });
-      console.log(`nearestProj.location: ${!nearestProj ? 'NOTHING!' : nearestProj.location}`)
+      Helpers.log(`nearestProj.location: ${!nearestProj ? 'NOTHING!' : nearestProj.location}`)
       let realtivePathToFile = singleton.filename.replace(nearestProj.location, '');
-      console.log(`realtivePathToFile: ${realtivePathToFile}`)
-      console.log(`singleton.filename: ${singleton.filename}`)
+      Helpers.log(`realtivePathToFile: ${realtivePathToFile}`)
+      Helpers.log(`singleton.filename: ${singleton.filename}`)
       const cwdForWorker = singleton.filename.replace(realtivePathToFile, '');
-      console.log(`cwdForWorker: ${cwdForWorker}`)
+      Helpers.log(`cwdForWorker: ${cwdForWorker}`)
 
       // const logFileName = `tmp-worker-log-${path.basename(singleton.filename.replace(/\.js$/, ''))}.txt`;
       if(process.platform === 'win32') {
