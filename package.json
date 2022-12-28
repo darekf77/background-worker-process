@@ -116,7 +116,7 @@
     "firedev-crud": "~13.1.35",
     "firedev-crud-deamon": "~13.1.25",
     "firedev-storage": "~13.1.20",
-    "firedev-typeorm": "~13.1.6",
+    "firedev-typeorm": "~13.1.7",
     "fkill": "6.1.0",
     "font-awesome": "4.7.0",
     "fs-extra": "8.1.0",
@@ -237,6 +237,5 @@
   "private": false,
   "main": "index.js",
   "name": "background-worker-process",
-  "version": "13.1.30",
-  "lastBuildTagHash": "f77e5dd49e11d324a9631c2e3fad8400f12e66d8"
+  "version": "13.1.30"
 }
