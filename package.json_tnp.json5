@@ -32,7 +32,7 @@
   "isCoreProject": false,
   "useFramework": false,
   "required": [],
-  "version": "v3",
+  "version": 'v16',
   "isGenerated": false,
   'requiredServers': [],
   "license": "MIT",
