@@ -1,4 +1,40 @@
 {
+  "tnp": {
+    "resources": [
+      "README.md"
+    ],
+    "overrided": {
+      "ignoreDepsPattern": [],
+      "includeAsDev": [],
+      "includeOnly": [
+        "firedev-ports"
+      ],
+      "dependencies": {},
+      "linkedFolders": [],
+      "npmFixes": []
+    },
+    "linkedProjects": [],
+    "smartContainerBuildTarget": "",
+    "linkedRepos": [],
+    "libReleaseOptions": {
+      "nodts": false,
+      "obscure": false,
+      "ugly": false,
+      "includeNodeModules": false
+    },
+    "smartContainerTarget": "",
+    "type": "isomorphic-lib",
+    "isCoreProject": false,
+    "useFramework": false,
+    "required": [],
+    "version": "v4",
+    "isGenerated": false,
+    "requiredServers": [],
+    "license": "MIT",
+    "private": false,
+    "main": "index.js",
+    "workerPlugins": {}
+  },
   "dependencies": {
     "firedev-ports": "~16.0.47"
   },
@@ -249,7 +285,6 @@
   },
   "license": "MIT",
   "private": false,
-  "main": "index.js",
   "name": "background-worker-process",
   "version": "16.0.47",
   "lastBuildTagHash": "4309c92d82206e640d994f746247c0288bf1f214"
