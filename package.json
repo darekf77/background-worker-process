@@ -121,7 +121,7 @@
     "animate.css": "4.1.1 ",
     "any-project-cli": "~16.5.9",
     "axios": "1.3.5",
-    "background-worker-process": "~16.5.9",
+    "background-worker-process": "~16.5.10",
     "base32": "0.0.7",
     "bcryptjs": "2.4.3",
     "better-sqlite3": "7.6.2",
@@ -319,5 +319,5 @@
   "private": false,
   "name": "background-worker-process",
   "version": "16.5.10",
-  "lastBuildTagHash": "231ffc11c6313666c080266af53daa3c2668cfd0"
+  "lastBuildTagHash": "15dd5c53745f8f48ff67ab3c93c2d10ccae10ab3"
 }
