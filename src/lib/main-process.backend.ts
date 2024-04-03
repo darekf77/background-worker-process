@@ -12,7 +12,7 @@ import { Helpers } from 'tnp-helpers';
 //#endregion
 export async function mainProcess(args: string) {
   //#region @notForNpm
-  let { killAlreadyRegisterd = false } = Helpers.cliTool.argsFrom(args);
+  let { killAlreadyRegisterd = false } = Helpers.cliTool.getPramsFromArgs<{ killAlreadyRegisterd: boolean; }>(args);
 
   const db = await FiredevPorts.instance;
 
