@@ -23,7 +23,8 @@
       "includeNodeModules": false,
       "cliBuildNoDts": false,
       "cliBuildObscure": false,
-      "cliBuildIncludeNodeModules": false
+      "cliBuildIncludeNodeModules": false,
+      "cliBuildUglify": false
     },
     "smartContainerTarget": "",
     "type": "isomorphic-lib",
@@ -322,5 +323,6 @@
   "private": false,
   "name": "background-worker-process",
   "version": "16.5.18",
-  "lastBuildTagHash": "1f592dc6605a6bbdd316ecca557113be341306db"
+  "lastBuildTagHash": "1f592dc6605a6bbdd316ecca557113be341306db",
+  "main": "index.js"
 }
