@@ -1,5 +1,5 @@
 import { _ } from 'tnp-core';
-import { Morphi as Firedev } from 'morphi';
+import { Firedev } from 'firedev';
 import { WorkerProcessClass } from './worker-process-class';
 
 export class BootstrapWorker {
@@ -12,16 +12,16 @@ export class BootstrapWorker {
       const host = `http://localhost:${port}`;
       const controllers = [classFN];
 
-      const context = await Firedev.init({
-        host,
-        controllers,
-        entities,
-        mode: 'backend/frontend-worker'
-      }) as any;
-      const singleton = _.first(context.allControllersInstances) as WorkerProcessClass;
-      console.log(`hello from '${singleton.filename}`)
-      console.log(BootstrapWorker.READY_MESSAGE + ` on pid: ${process.pid}`);
-      return context;
+      // const context = await Firedev.init({
+      //   host,
+      //   controllers,
+      //   entities,
+      //   mode: 'backend/frontend-worker'
+      // }) as any;
+      // const singleton = _.first(context.allControllersInstances) as WorkerProcessClass;
+      // console.log(`hello from '${singleton.filename}`)
+      // console.log(BootstrapWorker.READY_MESSAGE + ` on pid: ${process.pid}`);
+      // return context;
     }
   }
 

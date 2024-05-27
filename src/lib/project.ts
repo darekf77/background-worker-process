@@ -1,16 +1,15 @@
-import { Morphi } from 'morphi';
 import { BaseProject } from 'tnp-helpers';
 
-@Morphi.Entity({
-  className: 'Project'
-})
+// @Morphi.Entity({
+//   className: 'Project'
+// })
 export class Project {
 
 }
 
-@Morphi.Entity({
-  className: 'SubProject'
-})
+// @Morphi.Entity({
+//   className: 'SubProject'
+// })
 export class SubProject {
 
 }

@@ -1,5 +1,5 @@
 import { crossPlatformPath } from 'tnp-core';
-import { Morphi as Firedev } from 'morphi';
+import { Firedev } from 'firedev';
 import { BaseWorkerController } from './base-worker-controller.backend';
 import { BootstrapWorker } from './bootsrap-worker.backend';
 //#region @notForNpm
@@ -32,13 +32,13 @@ export class BaseWorkerChildController extends BaseWorkerController {
 
   updateRealtime() {
     //#region @notForNpm
-    const id = 2;
-    Firedev.Realtime.Server.TrigggerEntityChanges(TestEntity2.by(id))  ;
-    const msg = `realtime update of (${CLASS.getName(TestEntity2)}, id:${id}).. from worker ${CLASS.getNameFromObject(this)}`;
-    this.updates.push(`[${(new Date).getTime()}] ${msg}`)
-    setTimeout(() => {
-      this.updateRealtime();
-    }, 2000);
+    // const id = 2;
+    // Firedev.Realtime.Server.TrigggerEntityChanges(TestEntity2.by(id));
+    // const msg = `realtime update of (${CLASS.getName(TestEntity2)}, id:${id}).. from worker ${CLASS.getNameFromObject(this)}`;
+    // this.updates.push(`[${(new Date).getTime()}] ${msg}`)
+    // setTimeout(() => {
+    //   this.updateRealtime();
+    // }, 2000);
     //#endregion
   }
 

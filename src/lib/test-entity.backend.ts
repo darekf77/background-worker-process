@@ -1,11 +1,10 @@
 
 //#region @notForNpm
-import { Morphi as Firedev } from 'morphi';
 
-@Firedev.Entity({
-  className: 'TestEntity'
-})
-export class TestEntity extends Firedev.Base.Entity<any> {
+// @Firedev.Entity({
+//   className: 'TestEntity'
+// })
+export class TestEntity {
 
   static by(id: number) {
     return new TestEntity(id);
@@ -13,15 +12,14 @@ export class TestEntity extends Firedev.Base.Entity<any> {
   constructor(
     public id: number
   ) {
-    super();
   }
 
 }
 
 
-@Firedev.Entity({
-  className: 'TestEntity2'
-})
+// @Firede'v.Entity({
+//   className: 'TestEntity2'
+// })'
 export class TestEntity2 extends TestEntity {
   static by(id: number) {
     return new TestEntity2(id);
